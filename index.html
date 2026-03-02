@@ -52,9 +52,9 @@ body {
 img {
     position: fixed;
     top: 20px;
-    left: 20px; /* kiri atas */
-    width: 25vw; /* lebih besar, sekitar 1/4 layar */
-    transform: rotate(-10deg); /* miring ke kiri */
+    left: 20px;
+    width: 25vw;
+    transform: rotate(-10deg);
     border-radius: 15px;
     box-shadow: 0 10px 20px rgba(0,0,0,0.3);
     display: none;
@@ -70,72 +70,23 @@ img {
 }
 
 /* BUNGA */
-.lily {
-    position: absolute;
-    width: 0;
-    height: 0;
-    animation: sway-lily 2s ease-in-out infinite alternate;
-    z-index: 1;
-}
-.lily .stem {
-    position: absolute;
-    width: 6px;
-    height: 120px;
-    background: linear-gradient(to top, #228B22, #32CD32);
-    left: -3px;
-    bottom: 0;
-    border-radius: 3px;
-}
-.lily .leaf {
-    position: absolute;
-    width: 50px;
-    height: 20px;
-    background: linear-gradient(to right, #32CD32, #228B22);
-    border-radius: 50% 50% 0 0;
-    bottom: 60px;
-}
+.lily { position: absolute; width: 0; height: 0; animation: sway-lily 2s ease-in-out infinite alternate; z-index: 1; }
+.lily .stem { position: absolute; width: 6px; height: 120px; background: linear-gradient(to top, #228B22, #32CD32); left: -3px; bottom: 0; border-radius: 3px; }
+.lily .leaf { position: absolute; width: 50px; height: 20px; background: linear-gradient(to right, #32CD32, #228B22); border-radius: 50% 50% 0 0; bottom: 60px; }
 .lily .leaf.left { left: -45px; transform: rotate(-30deg); }
 .lily .leaf.right { left: -5px; transform: rotate(30deg); }
-
-/* 6 kelopak */
-.lily .petal {
-    position: absolute;
-    width: 40px;
-    height: 80px;
-    background: linear-gradient(to top, #fff, #f0f0f0);
-    border-radius: 50% 50% 0 0;
-    bottom: 120px;
-    left: -20px;
-    transform-origin: bottom center;
-}
+.lily .petal { position: absolute; width: 40px; height: 80px; background: linear-gradient(to top, #fff, #f0f0f0); border-radius: 50% 50% 0 0; bottom: 120px; left: -20px; transform-origin: bottom center; }
 .lily .petal:nth-child(1) { transform: rotate(0deg) translateY(-20px);}
 .lily .petal:nth-child(2) { transform: rotate(60deg) translateY(-20px);}
 .lily .petal:nth-child(3) { transform: rotate(120deg) translateY(-20px);}
 .lily .petal:nth-child(4) { transform: rotate(180deg) translateY(-20px);}
 .lily .petal:nth-child(5) { transform: rotate(240deg) translateY(-20px);}
 .lily .petal:nth-child(6) { transform: rotate(300deg) translateY(-20px);}
-
-@keyframes sway-lily {
-    0% { transform: translateX(0px) rotate(-5deg);}
-    50% { transform: translateX(3px) rotate(5deg);}
-    100% { transform: translateX(0px) rotate(-5deg);}
-}
+@keyframes sway-lily { 0% { transform: translateX(0px) rotate(-5deg);} 50% { transform: translateX(3px) rotate(5deg);} 100% { transform: translateX(0px) rotate(-5deg);} }
 
 /* CINCIN PUTIH JATUH */
-.falling-ring {
-    position: fixed;
-    width: 25px;
-    height: 25px;
-    border: 3px solid white;
-    border-radius: 50%;
-    top: -40px;
-    box-shadow: 0 0 8px white;
-    animation: fall linear forwards;
-    pointer-events: none;
-}
-@keyframes fall {
-    to { transform: translateY(110vh) rotate(360deg); opacity: 0; }
-}
+.falling-ring { position: fixed; width: 25px; height: 25px; border: 3px solid white; border-radius: 50%; top: -40px; box-shadow: 0 0 8px white; animation: fall linear forwards; pointer-events: none; }
+@keyframes fall { to { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
 </style>
 </head>
 <body>
@@ -184,19 +135,14 @@ function typeLine(text, callback){
     typeChar();
 }
 
-// Buat bunga lily 6 kelopak di bawah layar
+// Buat bunga lily
 function createLilies(count=5){
     for(let i=0;i<count;i++){
         let lily=document.createElement("div");
         lily.className="lily";
         lily.style.left=(10 + Math.random()*80)+"vw";
-        lily.style.top=(50 + Math.random()*40)+"vh"; // bunga di bawah layar
-
-        for(let k=0;k<6;k++){
-            let p=document.createElement("div");
-            p.className="petal";
-            lily.appendChild(p);
-        }
+        lily.style.top=(50 + Math.random()*40)+"vh";
+        for(let k=0;k<6;k++){ let p=document.createElement("div"); p.className="petal"; lily.appendChild(p); }
         let s=document.createElement("div"); s.className="stem"; lily.appendChild(s);
         let dl=document.createElement("div"); dl.className="leaf left"; lily.appendChild(dl);
         let dr=document.createElement("div"); dr.className="leaf right"; lily.appendChild(dr);
@@ -228,19 +174,12 @@ btn.onclick=function(){
                 createLilies(6);
                 lilyAdded=true;
             }
+            current++; // pindah ke sini
         });
-        current++;
     }
     if(current===messages.length){ btn.innerHTML="💍 klik terakhir yaa 💍"; }
-    
-    // setiap tombol ditekan, cincin putih jatuh banyak
-    for(let i=0;i<10;i++){ 
-        setTimeout(createRing, i*150);
-    }
-
-    if(current>messages.length){
-        btn.style.display="none";
-    }
+    for(let i=0;i<10;i++){ setTimeout(createRing, i*150); }
+    if(current>messages.length){ btn.style.display="none"; }
 }
 </script>
 </body>
